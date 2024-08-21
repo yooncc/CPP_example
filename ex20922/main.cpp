@@ -1,39 +1,51 @@
 #include <iostream>
-#define ARR_MAX 200000
-#define VALUE_MAX 100000
 
 using namespace std;
 
-int N,K,seqLen,maxLen,cnt,seq[ARR_MAX];
+int N, K, savePoint=0,sLength,dup[200001] = { 0, },An[100001] = {0,},maxSum=0;
 
-int main() {
+
+int main()
+{
+
     cin.tie(NULL)->ios::sync_with_stdio(false);
 
     cin >> N >> K;
-    for (int i=0;i<N;i++) {
-        cin >> seq[i];
-    }
-    cnt = 0;
-    maxLen = 0;
-    while (cnt != N) {
-        seqLen =0;
-        int valueCnt[VALUE_MAX] = {0,};
-        for (int i=cnt;i<N;i++) {
-            valueCnt[seq[i]]++;
-            if (valueCnt[seq[i]] > K) {
-                cnt++;
-                if (maxLen < seqLen) {
-                    maxLen = seqLen;
+
+    for (int i = 0; i < N; i++) {
+       int x;
+       cin >> x;
+       An[i] = x;
+       dup[x]++;
+ 
+       if (dup[x] > K) {     
+            for (int j=0;j<100000;j++) {
+                if (An[j] == x) {
+                    An[j] = 0;
+                    if (savePoint <= j) {
+                        savePoint = j+1;
+                    }
+                    break;
                 }
-                break;
             }
-            seqLen++;
-            if (i == N-1) {
-                cnt = N;
+            dup[x]--;
+            
+            if (sLength > maxSum) {
+                maxSum = sLength;
             }
+            sLength = i - savePoint+1;
+        }
+        else {
+            sLength++;
         }
     }
-    
-    cout << maxLen;
 
+    if (sLength > maxSum) {
+        maxSum = sLength;
+    }
+
+    cout << maxSum << endl;
+
+
+    return 0;
 }
