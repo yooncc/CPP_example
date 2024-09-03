@@ -1,128 +1,48 @@
 #include <iostream>
+
 using namespace std;
 
-int main() {
+long long x, y;
 
-    int cvalue,x,y;
-    cin >> x >> y ;
-    cvalue = 1;
+int main()
+{
+   cin >> x >> y;
 
-    int arr[] = {0,0};
-    int count =0 ;
+   
+   if (x==0 && y==0) {
+      cout << 1;
+   }
+   else if ((x > 0 && y > 0) || (x < 0 && y < 0)) {   // 1사분면 && 3사분면
+      long long cur = abs(x)+abs(y);   // 위치
 
-    while(1) {
-        if (arr[0]==x && arr[1]==y) {
-            cout << cvalue;
-            return 0;
-        }
-        
-        count++;
-        
-        arr[1] +=1;
-        cvalue ++;
-        if (arr[0]==x && arr[1]==y) {
-            cout << cvalue;
-            return 0;
-        }
-
-        if (count-1 > 0) {
-            for (int i=0;i<count-1;i++) {
-                arr[0] -= 1;
-                arr[1] += 1;
-                cvalue ++;
-                if (arr[0]==x && arr[1]==y) {
-                    cout << cvalue;
-                    return 0;
-                }  
-            }
-        }
-
-        if (count-1 > 0) {
-            for (int i=0;i<count-1;i++) {
-                arr[0] -= 1;
-                cvalue ++;
-                if (arr[0]==x && arr[1]==y) {
-                    cout << cvalue;
-                    return 0;
-                }  
-            }
-        }
-
-        for (int i=0;i<count+1;i++) {
-            if (i==0) {
-                arr[0] -= 1;
-                cvalue++;
-                if (arr[0]==x && arr[1]==y) {
-                    cout << cvalue;
-                    return 0;
-                }
-                    
-            }
-            else {
-                arr[1] -= 1;
-                cvalue++;
-                if (arr[0]==x && arr[1]==y) {
-                    cout << cvalue;
-                    return 0;
-                }
-                    
-            }
-        }
-
-        if (count-1 > 0) {
-            for (int i=0;i<count-1;i++) {
-                arr[0] += 1;
-                arr[1] -= 1;
-                cvalue ++;
-                if (arr[0]==x && arr[1]==y) {
-                    cout << cvalue;
-                    return 0;
-                }
-            }
-        }
-
-        arr[0] += 1;
-        arr[1] -= 1;
-        cvalue ++;
-        if (arr[0]==x && arr[1]==y) {
-            cout << cvalue;
-            return 0;
-        }
-            
-        if (count-1 > 0) {
-            for (int i=0;i<count-1;i++) {
-                arr[0] += 1;
-                cvalue ++;
-                if (arr[0]==x && arr[1]==y) {
-                    cout << cvalue;
-                    return 0;
-                }
-                    
-            }
-        }
+      if (y > 0) {
+         cout << ((3 * cur * cur) - (2 * cur) + 1) - abs(x);
+      }
+      else {
+         cout << ((3 * cur * cur) + cur + 1) - abs(x);
+      }
+   }
+   else {   // 2사분면 && 4사분면
+      long long cur = max(abs(x), abs(y));   // 위치
+      
+      if (y == 0) {
+         if (x > 0) {
+            cout << ((3 * cur * cur) + cur + 1) + abs(x) + (cur - abs(y));
+         }
+         else {
+            cout << ((3 * cur * cur) - (2 * cur) + 1) + abs(x) + (cur - abs(y));
+         }
+      }
+      else if (y > 0) {
+         cout << ((3 * cur * cur) - (2 * cur) + 1) + abs(x) + (cur - abs(y));
+      }
+      else {
+         cout << ((3 * cur * cur) + cur + 1) + abs(x) + (cur - abs(y));
+      }
+      
+   }
 
 
-
-        for (int i=0;i<count+1;i++) {
-            if (i==0) {
-                arr[0] += 1;
-                cvalue++;
-                if (arr[0]==x && arr[1]==y) {
-                    cout << cvalue;
-                    return 0;
-                }
-                    
-            }
-            else {
-                arr[1] += 1;
-                cvalue++;
-                if (arr[0]==x && arr[1]==y) {
-                    cout << cvalue;
-                    return 0;
-                }
-            }
-        }
-    }
-
-    return 0;
+   return 0;
 }
+
