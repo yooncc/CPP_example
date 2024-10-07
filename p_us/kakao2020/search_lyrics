@@ -1,0 +1,68 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+
+
+vector<int> solution(vector<string> words, vector<string> queries) {
+    vector<int> answer;
+    
+    for (int i=0;i<queries.size();i++) {
+        answer.push_back(0);
+        int querySize = queries[i].size();
+        int isLeft;
+        int mypoint;
+        if (queries[i][0] == '?') {
+            isLeft= 1;
+        }
+        else {
+            isLeft =0;
+        }
+        if (isLeft==1) {
+            for (int j=0;j<queries[i].size();j++) {
+                if (queries[i][j] != '?') {
+                    mypoint = j;
+                    break;
+                }
+            }
+        }
+        
+        for (int j=0;j<words.size();j++) {
+            if (words[j].size() != querySize) {
+                continue;
+            }
+            int isVal =1;
+            if (isLeft==1) {
+                for (int k=mypoint;k<querySize;k++) {
+                    if (words[j][k]!=queries[i][k]) {
+                        isVal=0;
+                        break;
+                    }
+                }
+            }
+            else {
+                for (int k=0;k<querySize;k++) {
+                    if (words[j][k]==queries[i][k]) {
+                        continue;
+                    }
+                    if (queries[i][k] == '?') {
+                        break;
+                    }
+                    else {
+                        isVal=0;
+                        break;
+                    }
+                }
+            }
+            
+            
+            if (isVal == 1) {
+                answer[i]++;
+            }
+        }
+    }
+    
+    
+    return answer;
+}
